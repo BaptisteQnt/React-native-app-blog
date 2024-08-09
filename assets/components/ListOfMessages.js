@@ -1,17 +1,57 @@
+import React, { useState, useEffect } from "react";
 import { View, FlatList, Text, StyleSheet } from "react-native";
+import { requestBase } from "../utils/constants";
+import Loading from "./Loading";
 
-export const ListOfMessages = () => {
-    const message = {
+export const ListOfMessages = ({ conversationId }) => {
+    const [messages, setMessages] = useState(null);
+    // const message = {
+    //     "id": 2,
+    //     "message": [
+    //         {
+    //             "id": 1,
+    //             "type": "to",
+    //             "text": "After let me start by saying, for those of you who might be confused."
+    //         },
+    //         {
+    //             "id": 2,
+    //             "type": "from",
+    //             "text": "After the 2000 census, reprsentative Davis meneuvered"
+    //         },
+    //         {
+    //             "id": 3,
+    //             "type": "from",
+    //             "text": "Genitacally advanced agriculuture, for those of you who might be confused."
+    //         },
+    //         {
+    //             "id": 4,
+    //             "type": "to",
+    //             "text": "Did should'nt be suprising"
+    //         },
+    //     ]
+    // }
 
+    async function fetchMessages() {
+        const response = await fetch(
+            requestBase + "/messages/" + conversationId + ".json"
+        );
+        setMessages(await response.json());
+    }
+
+    useEffect(() => {
+        fetchMessages();
+    },[]);
+    if (!messages) {
+        return <Loading message="loading message"/>
     }
 
     const renderItem = ({ item }) => {
         return (
             <View
-                style={{
+                style={[
                     styles.text,
                     item.type === "from" ? styles.textTo : styles.textFrom,
-                }}
+                ]}
             >
                 <Text style={{}}>{item.text}</Text>
             </View>

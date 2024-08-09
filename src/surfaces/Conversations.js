@@ -32,7 +32,7 @@ export const Conversations = ({ navigation }) => {
                     borderWidth: 1,
                     borderColor: "#EEF2E2",
                     position: "absolute",
-                    top: 210,
+                    top: 280,
                     left: -160,
                     transform: [{ rotate: "-45deg" }],
                 }}

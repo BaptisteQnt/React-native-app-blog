@@ -1,15 +1,18 @@
 import React from "react";
-import { View, Text, Image } from "react-native";
+import { View, Image } from "react-native";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ListOfMessages } from "../components/ListOfMessages";
+import { ConversationContext } from "../context";
 
 export const Messages = ({ route }) => {
     const headerHeight = useHeaderHeight();
-    console.log("log route in message surface ",JSON.stringify(route))
+    // console.log("log route in message surface ",JSON.stringify(route))
 
     return(
         <SafeAreaView style={{ flex: 1, paddingTop: headerHeight + 100 }}>
+            <ConversationContext.Consumer>
+                {({ conversationId }) => (
             <>
             <View
                 style={{
@@ -78,6 +81,8 @@ export const Messages = ({ route }) => {
             </View>
             <ListOfMessages conversationId="2" />
             </>
+            )}
+            </ConversationContext.Consumer>
         </SafeAreaView>
     );
 };
